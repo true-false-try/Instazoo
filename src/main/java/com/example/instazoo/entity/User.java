@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String name;
     @Column(unique = true, updatable = false)
     private String userName;
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String lastName;
     @Column(unique = true)
     private String email;
