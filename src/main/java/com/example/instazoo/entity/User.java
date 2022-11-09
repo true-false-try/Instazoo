@@ -2,9 +2,9 @@ package com.example.instazoo.entity;
 
 import com.example.instazoo.entity.enums.ERole;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,8 +12,10 @@ import java.util.*;
 
 @Data
 @Entity
-@RequiredArgsConstructor
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,4 +52,37 @@ public class User {
         this.createDate = LocalDateTime.now();
     }
 
+    /**
+     * SECURITY
+     */
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
