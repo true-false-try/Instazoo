@@ -25,13 +25,13 @@ import java.util.zip.Inflater;
 
 @Slf4j
 @Service
-public class ImageService extends GetUserByPrincipal {
+public class ImageUploadService extends GetUserByPrincipal {
     private final ImageRepository imageRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public ImageService(UserRepository userRepository, ImageRepository imageRepository, PostRepository postRepository) {
+    public ImageUploadService(UserRepository userRepository, ImageRepository imageRepository, PostRepository postRepository) {
         super(userRepository);
         this.imageRepository = imageRepository;
         this.postRepository = postRepository;

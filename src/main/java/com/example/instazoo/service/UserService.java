@@ -9,6 +9,7 @@ import com.example.instazoo.repository.UserRepository;
 import com.example.instazoo.service.GetUserByPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,8 @@ public class UserService extends GetUserByPrincipal {
     }
 
 
-
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
 }
