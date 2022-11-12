@@ -3,6 +3,7 @@ package com.example.instazoo.security.config;
 import com.example.instazoo.security.SecurityConstant;
 import com.example.instazoo.security.jwt.JWTAuthenticationEntryPoint;
 import com.example.instazoo.security.jwt.JWTAuthenticationFilter;
+import com.example.instazoo.security.jwt.JWTTokenProvider;
 import com.example.instazoo.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JWTTokenProvider provider;
     private final CustomUserDetailsService customUserDetailsService;
 
     @Override
@@ -61,6 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public JWTAuthenticationFilter jwtAuthenticationFilter() {
-        return new JWTAuthenticationFilter();
+        return new JWTAuthenticationFilter(provider, customUserDetailsService);
     }
 }
