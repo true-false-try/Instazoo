@@ -15,7 +15,7 @@ public abstract class GetUserByPrincipal {
 
     protected User getUserByPrincipal(Principal principal) {
         String username = principal.getName();
-        return userRepository.findUserByUserName(username)
+        return userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found with username" + username));
     }
 }

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class PostController {
     private final PostService postService;
     private final ResponseErrorValidation responseErrorValidation;
+    private final PostMapper mapper;
 
     @PostMapping("create")
     public ResponseEntity<Object> createPost(@Valid @RequestBody PostDTO postDTO,
@@ -34,7 +35,7 @@ public class PostController {
         if (!ObjectUtils.isEmpty(errors)) return errors;
 
         Post post = postService.createPost(postDTO, principal);
-        PostDTO createPost = PostMapper.INSTANCE.postToPostDTO(post);
+        PostDTO createPost = mapper.postToPostDTO(post);
 
         return new ResponseEntity<>(createPost, HttpStatus.OK);
 
@@ -44,7 +45,7 @@ public class PostController {
     public ResponseEntity<List<PostDTO>> getAllPosts() {
         List<PostDTO> postDTOS = postService.getAllPosts()
                 .stream()
-                .map(PostMapper.INSTANCE::postToPostDTO)
+                .map(mapper::postToPostDTO)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(postDTOS, HttpStatus.OK);
@@ -54,7 +55,7 @@ public class PostController {
     public ResponseEntity<List<PostDTO>> getAllPostsForUser(Principal principal) {
         List<PostDTO> postDTOS = postService.getAllPostsForUser(principal)
                 .stream()
-                .map(PostMapper.INSTANCE::postToPostDTO)
+                .map(mapper::postToPostDTO)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(postDTOS, HttpStatus.OK);
@@ -65,7 +66,7 @@ public class PostController {
     public ResponseEntity<PostDTO> likePost(@PathVariable("postId") Long postId,
                                             @PathVariable("username") String username) {
         Post post = postService.likePost(postId, username);
-        PostDTO postDTO = PostMapper.INSTANCE.postToPostDTO(post);
+        PostDTO postDTO = mapper.postToPostDTO(post);
 
         return new ResponseEntity<>(postDTO, HttpStatus.OK);
 

@@ -40,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return User.builder()
                 .id(user.getId())
-                .userName(user.getUsername())
+                .username(user.getUsername())
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .authorities(authorities)

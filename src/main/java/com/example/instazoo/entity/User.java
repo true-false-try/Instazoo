@@ -3,8 +3,10 @@ package com.example.instazoo.entity;
 import com.example.instazoo.entity.enums.ERole;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ import java.util.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +25,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String name;
     @Column(unique = true, updatable = false)
-    private String userName;
+    private String username;
     @Column(nullable = false, updatable = false)
-    private String lastName;
+    private String lastname;
     @Column(unique = true)
     private String email;
     @Column(columnDefinition = "text")
@@ -58,7 +61,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.username;
     }
 
     @Override

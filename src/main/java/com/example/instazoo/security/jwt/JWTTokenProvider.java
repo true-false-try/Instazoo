@@ -30,7 +30,7 @@ public class JWTTokenProvider {
         claimMap.put("id", userId);
         claimMap.put("username", user.getEmail());
         claimMap.put("firstname", user.getName());
-        claimMap.put("lastname", user.getLastName());
+        claimMap.put("lastname", user.getLastname());
 
         return Jwts.builder()
                 .setSubject(userId)

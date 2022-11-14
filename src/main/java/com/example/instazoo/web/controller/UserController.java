@@ -16,17 +16,18 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("api/user")
 @CrossOrigin
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final ResponseErrorValidation responseErrorValidation;
+    private final UserMapper mapper;
 
     @GetMapping
     public ResponseEntity<UserDTO> getCurrentUser(Principal principal) {
         User user = userService.getCurrentUser(principal);
-        UserDTO userDTO = UserMapper.INSTANCE.userToUserDTO(user);
+        UserDTO userDTO = mapper.userToUserDTO(user);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
 
@@ -34,7 +35,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") Long userId) {
         User user = userService.getUserById(userId);
-        UserDTO userDTO = UserMapper.INSTANCE.userToUserDTO(user);
+        UserDTO userDTO = mapper.userToUserDTO(user);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
@@ -44,7 +45,7 @@ public class UserController {
         if (!ObjectUtils.isEmpty(errors)) return errors;
 
         User user = userService.updateUser(userDTO, principal);
-        UserDTO userUpdated =  UserMapper.INSTANCE.userToUserDTO(user);
+        UserDTO userUpdated = mapper.userToUserDTO(user);
 
         return new ResponseEntity<>(userUpdated, HttpStatus.OK);
 

@@ -2,12 +2,14 @@ package com.example.instazoo.mapping;
 
 import com.example.instazoo.dto.CommentDTO;
 import com.example.instazoo.entity.Comment;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
+@Component
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface CommentMapper {
-    CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
     CommentDTO commentToCommentDTO(Comment comment);
 
 }

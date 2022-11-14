@@ -33,8 +33,8 @@ public class UserService extends GetUserByPrincipal {
         User user = new User();
         user.setEmail(userIn.getEmail());
         user.setName(userIn.getFirstname());
-        user.setLastName(userIn.getLastname());
-        user.setUserName(userIn.getUsername());
+        user.setLastname(userIn.getLastname());
+        user.setUsername(userIn.getUsername());
         user.setPassword(encoder.encode(userIn.getPassword()));
         user.getRole().add(ERole.ROLE_USER); // user will have default one role
 
@@ -50,7 +50,7 @@ public class UserService extends GetUserByPrincipal {
     public User updateUser(UserDTO userDTO, Principal principal) {
         User user = getUserByPrincipal(principal);
         user.setName(userDTO.getFirstname());
-        user.setLastName(userDTO.getLastname());
+        user.setLastname(userDTO.getLastname());
         user.setBio(userDTO.getBio());
 
         return userRepository.save(user);

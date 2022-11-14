@@ -17,7 +17,7 @@ import java.security.Principal;
 @CrossOrigin
 @RequiredArgsConstructor
 public class ImageUploadController {
-    private ImageUploadService imageUploadService;
+    private final ImageUploadService imageUploadService;
     private final String SUCCESS_MESSAGE = "Image Upload Successfully";
 
     @PostMapping("/upload")

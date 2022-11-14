@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class CommentController {
     private final CommentService commentService;
     private final ResponseErrorValidation responseErrorValidation;
+    private final CommentMapper mapper;
 
     @PostMapping("{postId}/create")
     public ResponseEntity<Object> createComment(@Valid @RequestBody CommentDTO commentDTO,
@@ -35,7 +36,7 @@ public class CommentController {
         if (!ObjectUtils.isEmpty(errors)) return errors;
 
         Comment comment = commentService.saveComment(postId, commentDTO, principal);
-        CommentDTO createComment = CommentMapper.INSTANCE.commentToCommentDTO(comment);
+        CommentDTO createComment = mapper.commentToCommentDTO(comment);
 
         return new ResponseEntity<>(createComment, HttpStatus.OK);
     }
@@ -44,7 +45,7 @@ public class CommentController {
     public ResponseEntity<List<CommentDTO>> getAllCommentsToPost(@PathVariable("postId") Long postId) {
         List<CommentDTO> commentDTOS = commentService.getAllCommentsForPost(postId)
                 .stream()
-                .map(CommentMapper.INSTANCE::commentToCommentDTO)
+                .map(mapper::commentToCommentDTO)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
